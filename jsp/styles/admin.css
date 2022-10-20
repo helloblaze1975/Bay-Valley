@@ -1,0 +1,30 @@
+.container-fluid{
+    display: flex;
+    flex-flow:column wrap;
+    align-items:center;
+    height:420px;
+    width:430px;
+    background-color: black;
+ }
+ .object-one, .object-two, .object-three{
+     display: flex;
+     width: 100px;
+     height: 100px;
+     padding: 40px;
+     text-align: center;
+     margin:10px;
+ }
+ .object-one{
+    background-color: red;
+    order:1;
+ }
+ .object-two{
+    background-color: yellow;
+    order:2;
+ }
+ .object-three{
+    background-color: blue;
+    order:3;
+ }
+ 
+ 

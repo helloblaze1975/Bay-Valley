@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>USA map game</title>
+</head>
+<style>
+    .game{
+        width: 825px;
+        height: 575px;
+        border:1px solid black;
+        background-color: blue;
+        position:absolute;
+    }
+    .square{
+        /*  width height -1, for the border */
+        width: 81.5px;
+        height: 56.5px;
+        border:1px dashed yellow;
+        border-radius: 6px;
+        background-image: url(./img/33-23.png);
+        position:absolute;
+    }
+    /* .submit{
+        width:56px;
+        height:40px;
+        border: 1px solid blue;
+        border-radius: 0%;
+    } */
+</style>
+<body>
+    <div class ="game"> 
+        
+    </div>
+  
+
+    
+</body>
+<script>
+    //--------------------draw square---------------//
+    var game = document.querySelector(".game");
+    var moving_ele = "";
+    for (var row = 0; row <10; row++){
+        for (var column = 0; column <10;column++){
+            var tmp_div = document.createElement('div');
+            tmp_div.className = "square";
+            tmp_div.setAttribute("draggable","true");
+            tmp_div.setAttribute("ori_column",column)
+            tmp_div.setAttribute("ori_row",row)
+
+            tmp_div.x = column * 82.5;
+            tmp_div.y = row * 57.5;
+    
+            tmp_div.style.left = tmp_div.x + "px";
+            tmp_div.style.top = tmp_div.y + "px";
+            tmp_div.style.backgroundPositionX = -tmp_div.x + "px";
+            tmp_div.style.backgroundPositionY = -tmp_div.y + "px";
+            game.appendChild(tmp_div)
+
+             //--------------------drag and drop square---------------//
+            
+            tmp_div.ondragstart = function(){
+                moving_ele = this;
+                console.log(this,"begin to drag");
+                
+
+            }
+
+            tmp_div.ondragover = function(){
+                event.preventDefault()
+            }
+
+            tmp_div.ondrop = function(){
+                console.log(this, "dropdwn!")
+
+                var drag = moving_ele;
+                var down = this;
+                // change the (x,y) with drag and down square
+                var c_x = drag.x;
+                drag.x = down.x;
+                down.x = c_x;
+                
+                var c_y = drag.y;
+                drag.y = down.y;
+                down.y = c_y;
+
+                drag.style.left = drag.x + "px";
+                drag.style.top = drag.y + "px";
+
+                down.style.left = down.x + "px";
+                down.style.top = down.y + "px";
+
+
+            }
+        }
+    }
+
+ //------ check game done--------------------//
+    var is_win = true;
+    var squareAll = document.querySelectorAll('.game>.square');
+            
+    for (var i = 0; i < squareAll.length; i++){
+            var tmp_div= squareAll[i];
+
+            var ori_x = tmp_div.getAttribute("ori_column")*82.5;
+            var ori_y = tmp_div.getAttribute("ori_row")*57.5;
+             
+            if ( ori_x != tmp_div.x || ori_y != tmp_div.y){
+                is_win = False;
+                break;
+            } 
+    }
+    alert("You win !")
+    
+
+</script>
+</html>

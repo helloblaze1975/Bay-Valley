@@ -1,0 +1,55 @@
+
+.container{
+    width: 825px;
+    height: 630px;
+    background-color: rgb(88, 116, 66);
+}
+.img-box{
+    width: 825px;
+    height: 575px;
+    background-image: url('./img/33-23.png');
+}
+
+.source{
+    
+    float: right;
+    flex-flow: row wrap;   
+}
+#source{
+    margin-left: 5px;
+    color:whitesmoke;
+    font-size: larger;
+    align-items: center; 
+     
+}
+
+.target{
+    display: flex;
+    align-items: center;
+    width: 88px;
+    height:45px;
+    position:absolute;
+    top:40px;
+    left:120px;
+     
+}
+#OG{
+    width: 88px;
+    height:60px;
+    position:absolute;
+    top:85px;
+    left:90px;
+    transform: rotate(15deg);
+     
+     
+}
+#CF{
+    width: 50px;
+    height:140px;
+    position:absolute;
+    top:180px;
+    left:80px;
+    transform: rotate(-25deg);
+     
+     
+}

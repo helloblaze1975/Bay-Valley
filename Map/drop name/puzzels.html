@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>United States</title>
+</head>
+<style>
+    .container{
+        width: 825px;
+        height: 730px;
+        background-color: rgb(88, 116, 66);
+    }
+    .game01{
+        margin-top: 150px;
+        width: 825px;
+        height: 575px;
+        border:1px solid black;
+        
+        position:absolute;
+    }
+    .row{
+        display: inline;
+        justify-content: center;
+    }
+    .square{
+        /*  width height -1, for the border */
+        width: 163px;
+        height: 113px;
+        border:1px dashed yellow;
+        border-radius: 6px;
+        background-image: url(./img/33-23.png);
+        position:absolute;
+    }
+    .text{
+        float: right;
+        flex-flow: row wrap;
+         
+        
+    }
+    .state{
+        margin-left: 5px;
+        border: 1px solid rgb(16, 15, 15);
+        background-color: wheat;
+        
+    }
+    p{
+        position:relative;
+    }
+</style>
+<body>
+    <div class="container">
+
+        <div class ="game">
+            <div class = "game01">     </div>
+            <div>
+                <h1> USA STATES GAME</h1>
+    
+                <!-- <input type="text" placeholder="States's Name" name="uname" required> -->
+                <div class="row"> 
+                    <div class="button">
+                    <button class="start_bt"> Submit</button>
+                </div>
+            </div>
+               
+
+
+            </div>
+            
+                <div class="button">
+                    <button class="start_btMap"> Jigsaw Start</button>
+                    <button class="check_btMap"> Jigsaw Check</button>
+                </div>
+                
+        
+     </div>
+    </div>
+<script>
+   
+    //-----------------------  random the square----------------------------//
+  
+    var oriCoordinate =[]
+    var ranCoordinate =[]
+    function my_random(max){
+        return parseInt(Math.random()*max);
+    }
+    var start_btMap = document.querySelector(".start_btMap");
+    start_btMap.onclick = function(){
+        console.log("start")
+        for (i =0;i< 25; i++){
+            ranCoordinate[i]=0
+        }
+       
+        for(let i =0; i < oriCoordinate.length; i++){
+            
+            var ran_num = my_random(100)
+            while (ranCoordinate[ran_num] != 0){
+                ran_num = my_random(100)
+            }
+                ranCoordinate[ran_num] = oriCoordinate[i]   
+            }
+            console.log(ranCoordinate)
+            var squareAll = document.querySelectorAll('.game01>.square');
+            for (var i = 0; i < squareAll.length;i++){
+                squareAll[i].x = ranCoordinate[i].x
+                squareAll[i].y = ranCoordinate[i].y
+
+                squareAll[i].style.left = ranCoordinate[i].x +"px"
+                squareAll[i].style.top= ranCoordinate[i].y +"px"
+    }
+    //----------Drag the square--------------------//
+    tmp_div.ondragstart = function(){
+        moving_ele = this;
+        console.log(this,"begin to drag");   
+    }
+    tmp_div.ondragover = function(){
+        event.preventDefault()
+    }
+    tmp_div.ondrop = function(){
+        console.log(this, "dropdwn!")
+
+        var drag = moving_ele;
+        var down = this;
+        console.log( "drag",drag,"down",down)
+        // change the (x,y) with drag and down square
+        var c_x = drag.x;
+        drag.x = down.x;
+        down.x = c_x;
+        
+        var c_y = drag.y;
+        drag.y = down.y;
+        down.y = c_y;
+        // console.log(drag.x,drag.y,down.x,down.y)
+        drag.style.left = drag.x + "px";
+        drag.style.top = drag.y + "px";
+
+        down.style.left = down.x + "px";
+        down.style.top = down.y + "px";
+       
+        var ori_x = moving_ele.getAttribute("ori_column")*82.5*2; 
+        var ori_y = moving_ele.getAttribute("ori_row")*57.5*2; 
+        
+        
+        if (ori_x == drag.x && ori_y ==drag.y){
+            let nState = 0;
+            nState +=1 
+        }
+        }
+        alert(`${nState} ,states done!`);  
+    }
+     
+
+      //--------------------draw square---------------//
+    var game = document.querySelector(".game01");
+    var moving_ele = "";
+    for (var row = 0; row <5; row++){
+        for (var column = 0; column <5;column++){
+            var tmp_div = document.createElement('div');
+            tmp_div.className = "square";
+            tmp_div.setAttribute("draggable","true");
+            tmp_div.setAttribute("ori_column",column)
+            tmp_div.setAttribute("ori_row",row)
+
+            tmp_div.x = column * 82.5*2;
+            tmp_div.y = row * 57.5*2;
+            //-----push the two array of coordinate----//
+            oriCoordinate.push({
+                x:column * 82.5*2,
+                y:row * 57.5*2
+            })
+            ranCoordinate.push(0)
+            //---- give the tmp_div style---//
+
+            tmp_div.style.left = tmp_div.x + "px";
+            tmp_div.style.top = tmp_div.y + "px";
+            tmp_div.style.backgroundPositionX = -tmp_div.x + "px";
+            tmp_div.style.backgroundPositionY = -tmp_div.y + "px";
+            game.appendChild(tmp_div)
+            // console.log(oriCoordinate,ranCoordinate);
+
+   
+    
+
+//--------------------drag and drop square----------------------------------------        ---------//
+       
+    tmp_div.ondragstart = function(){
+        moving_ele = this;
+        console.log(this,"begin to drag");   
+    }
+    tmp_div.ondragover = function(){
+        event.preventDefault()
+    }
+    tmp_div.ondrop = function(){
+        console.log(this, "dropdwn!")
+
+        var drag = moving_ele;
+        var down = this;
+        console.log( "drag",drag,"down",down)
+        // change the (x,y) with drag and down square
+        var c_x = drag.x;
+        drag.x = down.x;
+        down.x = c_x;
+        
+        var c_y = drag.y;
+        drag.y = down.y;
+        down.y = c_y;
+        // console.log(drag.x,drag.y,down.x,down.y)
+        drag.style.left = drag.x + "px";
+        drag.style.top = drag.y + "px";
+
+        down.style.left = down.x + "px";
+        down.style.top = down.y + "px";
+       
+        var ori_x = moving_ele.getAttribute("ori_column")*82.5*2; 
+        var ori_y = moving_ele.getAttribute("ori_row")*57.5*2; 
+        
+        let nState = 0;
+        if (ori_x == drag.x && ori_y ==drag.y){
+            nState +=1
+            alert(`${nState} ,states done!`);
+            console.log(nState, "state");
+            return 
+        }
+
+        }
+    }
+}
+
+
+   
+//  //------ check game done--------------------//
+    var check_btMap = document.getElementsByClassName("check_btMap");
+    check_btMap[0].addEventListener('click',function(){
+    var is_win = true;
+    // console.log(check_btMap);
+    // console.log("worked");
+    var squareAll = document.querySelectorAll('.game01>.square');
+            
+    for (var i = 0; i < squareAll.length; i++){
+            var tmp_div= squareAll[i];
+
+            var ori_x = tmp_div.getAttribute("ori_column")*82.5*2;
+            var ori_y = tmp_div.getAttribute("ori_row")*57.5*2;
+
+            
+            if ( ori_x != tmp_div.x || ori_y != tmp_div.y){
+                    is_win = false; }      
+    }  
+    if (is_win==true){alert("you win")
+    } else{ alert("try again")}
+}) 
+
+
+    
+
+</script>
+
+</body>
+</html>
